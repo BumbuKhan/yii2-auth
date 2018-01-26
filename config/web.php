@@ -53,15 +53,10 @@ $config = [
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
             'clients' => [
-                'google' => [
-                    'class' => 'yii\authclient\clients\Google',
-                    'clientId' => 'google_client_id',
-                    'clientSecret' => 'google_client_secret',
-                ],
                 'facebook' => [
                     'class' => 'yii\authclient\clients\Facebook',
-                    'clientId' => 'facebook_client_id',
-                    'clientSecret' => 'секретный_ключ_facebook_client',
+                    'clientId' => '120416358770881',
+                    'clientSecret' => 'bbad3576cc2eabe4701474ab4ac8a7b0',
                 ]
             ],
         ]

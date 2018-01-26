@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\User;
 use app\models\Auth;
 use yii\authclient\AuthAction;
 
@@ -80,11 +81,14 @@ class SiteController extends Controller
                         Yii::t('app', "Пользователь с такой электронной почтой как в {client} уже существует, но с ним не связан. Для начала войдите на сайт использую электронную почту, для того, что бы связать её.", ['client' => $client->getTitle()]),
                     ]);
                 } else {
+                    /*echo '<pre>';
+                    print_r($attributes);
+                    die();*/
                     $password = Yii::$app->security->generateRandomString(6);
                     $user = new User([
-                        'username' => $attributes['login'],
+                        'username' => $attributes['email'],
                         'email' => $attributes['email'],
-                        'password' => $password,
+                        'password_hash' => $password,
                     ]);
                     $user->generateAuthKey();
                     $user->generatePasswordResetToken();

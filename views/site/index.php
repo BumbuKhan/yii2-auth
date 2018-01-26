@@ -51,7 +51,7 @@ $this->title = 'My Yii Application';
             <div class="col-xs-12">
                 <?= yii\authclient\widgets\AuthChoice::widget([
                     'baseAuthUrl' => ['site/auth'],
-                    'popupMode' => true,
+                    'popupMode' => false,
                 ]) ?>
             </div>
         </div>

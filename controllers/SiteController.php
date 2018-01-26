@@ -15,6 +15,15 @@ use yii\authclient\AuthAction;
 
 class SiteController extends Controller
 {
+    public function beforeAction($action)
+    {
+        if ($action->id == 'auth') {
+            $this->enableCsrfValidation = false;
+        }
+
+        return parent::beforeAction($action);
+    }
+
     /**
      * @inheritdoc
      */
@@ -87,12 +96,17 @@ class SiteController extends Controller
                     $password = Yii::$app->security->generateRandomString(6);
                     $user = new User([
                         'username' => $attributes['email'],
-                        'email' => $attributes['email'],
+                        'auth_key' => Yii::$app->security->generateRandomString(32),
                         'password_hash' => $password,
+                        'password_reset_token' => Yii::$app->security->generateRandomString(32),
+                        'email' => $attributes['email'],
+                        'status' => 10,
+                        'created_at' => time(),
+                        'updated_at' => time(),
                     ]);
-                    $user->generateAuthKey();
-                    $user->generatePasswordResetToken();
+
                     $transaction = $user->getDb()->beginTransaction();
+
                     if ($user->save()) {
                         $auth = new Auth([
                             'user_id' => $user->id,

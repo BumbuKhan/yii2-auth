@@ -35,11 +35,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['id', 'username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
-            [['id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['username', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'status', 'created_at', 'updated_at'], 'required'],
+            [['status', 'created_at', 'updated_at'], 'integer'],
+            [['username', 'password_hash', 'password_reset_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
-            [['id'], 'unique'],
+            [['email'], 'string', 'max' => 100],
         ];
     }
 
@@ -96,14 +96,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return Yii::$app->getSecurity()->validatePassword($password, $this->password);
     }
 
-    public static function generateAuthKey()
-    {
-        return Yii::$app->getSecurity()->generateRandomString(32);
-    }
-
     public static function generatePasswordResetToken()
     {
-        return Yii::$app->getSecurity()->generateRandomString(32);
+        return Yii::$app->security->generateRandomString(32);
     }
 
     /**
